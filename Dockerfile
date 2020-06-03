@@ -104,7 +104,13 @@ RUN cd /tools \
     && chmod 777 exonerate-2.2.0-x86_64/bin/* \
     && git clone https://github.com/gatech-genemark/ProtHint.git /tools/ProtHint
 
-RUN apt-get install cdbfasta
+RUN apt-get install -y locales cdbfasta
+
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+    && locale-gen
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8  
 
 RUN adduser --disabled-password --gecos '' dockeruser
 RUN mkdir /data
@@ -116,7 +122,7 @@ RUN echo $HOME
 COPY gm_key_64.gz /
 RUN zcat /gm_key_64.gz > $HOME/.gm_key
 
-ENV LANG="C"
+#ENV LANG="C"
 ENV AUGUSTUS_CONFIG_PATH="/tools/augustus/config"
 ENV PATH="/tools/augustus/bin:${PATH}"
 ENV PATH="/tools/augustus/scripts:/tools/BRAKER/scripts:${PATH}"
