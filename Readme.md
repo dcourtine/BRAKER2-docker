@@ -32,7 +32,7 @@ docker build -t braker2 .
     #Once in the container:
     braker.pl --genome=<path/to/genome.fa> <other_parameters>
     ```
-    - run directly braker
+    - run directly braker (**not tested**)
     ```bash
     docker run --rm -v $(pwd):/data braker2:latest braker.pl --genome=<path/to/genome.fa> <other_parameters>
     ```
